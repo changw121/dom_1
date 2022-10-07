@@ -1,12 +1,4 @@
-// window.dom = {
-//     // create: function(){};
-//     create(tagName) {
-//         return document.createElement(tagName);
-//     }
-// };
-// dom.create = function() {};
 window.dom = {
-    // create: function(){};
     create (string) {
         const container = document.createElement("template");
         //如果你传入的string前面有空格，那么string中第一个孩子就是空格形成的文本
@@ -14,6 +6,14 @@ window.dom = {
         container.innerHTML = string.trim();
         //template拿到子元素的方法
         return container.content.firstChild;
+    },
+    after (node, node2) {
+        //把node2插到node下一个结点的前面
+        //经验证：即使node没有下一个结点仍然可以插入成功
+        node.parentNode.insertBefore(node2, node.nextSibling);
+    },
+    before (node, node2) {
+        node.parentNode.insertBefore(node2, node);
     }
 };
 
