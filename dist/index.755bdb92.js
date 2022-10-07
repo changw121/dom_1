@@ -21,6 +21,21 @@ window.dom = {
     wrap (node, parent) {
         dom.before(node, parent); //先将parent结点插入到node前面
         dom.append(parent, node); //再将node结点插入到parent的儿子节点上
+    },
+    remove (node) {
+        node.parentNode.removeChild(node); //让父节点删除它的儿子节点node
+        return node;
+    },
+    empty (node) {
+        // const {childNodes} = node  //等价于const childNodes = node.childNodes 
+        const array = [];
+        let x = node.firstChild;
+        while(x){
+            //由于我remove写了return，所以这里就可以直接push
+            array.push(dom.remove(node.firstChild));
+            x = node.firstChild;
+        }
+        return array;
     }
 };
 
