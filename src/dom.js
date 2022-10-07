@@ -36,5 +36,71 @@ window.dom = {
             x = node.firstChild;
         }
         return array
+    },
+    //读写结点的属性
+    attr(node, name, value){  //重载
+        //arguments.length：获取传入参数的个数
+        if(arguments.length === 3){ //当参数有三个时，给结点添加name:value
+            node.setAttribute(name, value); //node本来就有setAttribute
+        } else if(arguments.length === 2) {
+            return node.getAttribute(name); //当参数有两个时，为获取name的值value
+        }
+    },
+    text(node, string){  //适配
+        if(arguments.length === 2){
+            if('innerText' in node){
+                node.innerText = string; //ie
+            } else {
+                node.textContent = string;  //firefox Chrome
+            }  
+        } else if(arguments.length === 1) {
+            if('innerText' in node){
+                return node.innerText;  //ie
+            } else {
+                return node.textContent;  //firefox Chrome
+            }  
+        }              
+    },
+    //读写结点Html内容
+    html(node, string){
+        if(arguments.length === 2){
+            node.innerHTML = string;
+        } else if(arguments.length === 1){
+            return node.innerHTML;
+        }        
+    },
+    style(node, name, value){
+        if(arguments.length === 3){
+            //dom.style(div, 'color', 'red')
+            node.style[name] = value;
+        }else if(arguments.length === 2){
+            if(typeof name === "string"){
+                //dom.style(div, 'color')
+                return node.style[name];
+            }else if(name instanceof Object){
+                //dom.style(div, {color: 'red'})
+                const object = name;
+                for(let key in object){
+                    node.style[key] = object[key];  //node.style.key不行
+                }
+            }
+        }        
+    },
+    class: {
+        add(node, className){
+            node.classList.add(className);
+        }, 
+        remove(node, className){
+            node.classList.remove(className);
+        },
+        has(node, className){
+            return node.classList.contains(className);
+        }
+    },
+    on(node, eventName, fn){
+        node.addEventListener(eventName, fn);
+    },
+    off(node, eventName, fn){
+        node.addEventListener(eventName, fn);
     }
 };
