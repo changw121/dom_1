@@ -41,5 +41,22 @@
 // dom.off(test, 'click', fn);
 
 
+// const testDiv = dom.find('#test')[0];
+// console.log(testDiv);
+// const test2 = dom.find('#test2')[0];
+// console.log(dom.find('.red',test2)[0]);  //在testDiv里面找class=red的标签
 
+// console.log(dom.parent(test));
+// console.log(dom.children(test)[0]);
+
+// console.log(dom.siblings(dom.find('#s2')[0]));
+
+// console.log(dom.next(dom.find('#s3')[0]))
+
+// console.log(dom.previous(dom.find('#s1')[0]))
+
+// const t = dom.find('#travel')[0];
+// dom.each(dom.children(t), (n)=>dom.style(n, 'color', 'red'));  //用n占位代表每个遍历出来的node
+
+console.log(dom.index(s3));
 

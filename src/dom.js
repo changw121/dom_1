@@ -102,5 +102,55 @@ window.dom = {
     },
     off(node, eventName, fn){
         node.addEventListener(eventName, fn);
+    },
+    find(selector, scope){
+        // debugger
+        return (scope || document).querySelectorAll(selector);
+    },
+    parent(node){
+        return node.parentNode;
+    },
+    children(node){
+        return node.children;
+    },
+    //找到node的兄弟姐妹结点
+    siblings(node){
+        //node.parentNode.children是一个伪数组，Array.from之后变成数组再filter(过滤掉自身)
+        return Array.from(node.parentNode.children)
+        .filter(n => n !== node)
+    },
+    //获取下一个结点
+    next(node){
+        let x = node.nextSibling;
+        while(x && x.nodeType === 3){ //看x是都存在并且是文本结点时，再往后找一个结点，如果不到不是文本的，就只能返回null
+            x = x.nextSibling;
+        }
+        return x;
+    },
+    //获取上一个结点
+    previous(node){
+        let x = node.previousSibling;
+        while(x && x.nodeType === 3){ //看x是都存在并且是文本结点时，再往后找一个结点，如果不到不是文本的，就只能返回null
+            x = x.previousSibling;
+        }
+        return x;
+    },
+    //遍历所有结点
+    each(nodeList, fn){
+        for(let i =0; i<nodeList.length; i++){
+            fn.call(null, nodeList[i]);
+        }
+    },
+    //获取node排行老几
+    index(node){
+        let i;
+        const list = dom.children(node.parentNode);
+        for(i=0; i<list.length; i++){
+            if(list[i] === node){
+                break
+            }
+        }
+        return i
     }
+
 };
